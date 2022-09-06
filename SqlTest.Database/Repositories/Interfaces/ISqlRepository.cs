@@ -10,5 +10,6 @@ namespace SqlTest.Database.Repositories.Interfaces
     public interface ISqlRepository
     {
         Task<DataSet> GetByQuerySql(string query);
+        string GetWithDapperSql(string query);
     }
 }

@@ -42,5 +42,13 @@ namespace SqlTest.Core.Services
 
             return result;
         }
+        public string GetDapperSql()
+        {
+            var result = _heroRepo.GetWithDapperSql("SELECT * FROM public.\"Users\"");
+
+
+            return result;
+        }
+
     }
 }

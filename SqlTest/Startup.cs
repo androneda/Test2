@@ -7,10 +7,16 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using SqlTest.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using SqlTest.Database.Repositories.Interfaces;
+using SqlTest.Database.Repositories;
+using SqlTest.Core.Services.Interfaces;
+using SqlTest.Core.Services;
 
 namespace SqlTest
 {
@@ -26,12 +32,15 @@ namespace SqlTest
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SqlTest", Version = "v1" });
             });
+            services.AddEntityFrameworkNpgsql().AddDbContext<SqlDbContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("SqlData")));
+
+            services.AddScoped<ISqlRepository, SqlRepository>();
+            services.AddScoped<ISqlService, SqlService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

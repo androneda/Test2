@@ -9,5 +9,6 @@ namespace SqlTest.Core.Services.Interfaces
     public interface ISqlService
     {
         Task<string> GetSql(string query);
+        string GetDapperSql();
     }
 }
